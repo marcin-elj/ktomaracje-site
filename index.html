@@ -7,7 +7,7 @@
 <meta name="description" content="Studio tworzące aplikacje mobilne dla par i osób, które chcą lepiej rozumieć siebie. Twórcy „Kto Ma Rację?" — AI mediatora dla par." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 :root{
   --bg:#FAF7F4;
@@ -151,6 +151,14 @@ main, .page-shell{position:relative;z-index:2}
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-style:italic;font-weight:400;
   display:inline-block;
+  /* Fraunces italic 'J' has a stylized split-dot design (separated dot
+     above the stem) that Marcin reads as "clipped". Force Cormorant
+     Garamond fallback for the gradient word — its italic J is a single
+     unbroken curve with a clean top-left hook. Fraunces stays as the
+     primary face for the rest of the page. */
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:500;
+  letter-spacing:-.02em;
 }
 .hero-tagline{
   font-family:var(--serif);
