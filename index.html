@@ -129,29 +129,27 @@ main, .page-shell{position:relative;z-index:2}
   font-family:var(--serif);
   font-size:clamp(64px,9.8vw,148px);
   font-weight:300;
-  line-height:.94;
+  /* line-height 1.02 (was .94) — italic Fraunces "J" has a tall ascender
+     hook that overflows tight line-boxes. .94 cropped the top of J on
+     Chromium; 1.02 gives vertical breathing room without visibly
+     increasing the gap to the tagline below. */
+  line-height:1.02;
   letter-spacing:-.04em;
   margin:32px 0 0;
   color:var(--ink);
-  /* Allow italic descenders / right-leaning glyphs of the gradient span
-     to fully render — without this padding the trailing "y" / capital "J"
-     italic was being clipped by background-clip:text on Chromium. */
-  padding-right:.08em;
-  padding-bottom:.06em;
+  /* Horizontal padding gives the italic 'J' (left-leaning ascender) and
+     'y' (right descender) of the gradient span room to render without
+     background-clip:text cropping. Bottom padding handles 'y' too. */
+  padding-left:.15em;
+  padding-right:.15em;
+  padding-bottom:.08em;
+  margin-left:-.15em;
   overflow:visible;
 }
 .hero h1 .gradient{
   background:linear-gradient(120deg,var(--rose) 0%,var(--plum) 70%,var(--ink-soft) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-style:italic;font-weight:400;
-  /* Italic Fraunces "J" has a wide ascender hook reaching LEFT of the
-     glyph's normal box. Without left padding, background-clip:text on
-     Chromium crops the top-left curve of the J. Mirror padding on right
-     for the "y" descender. Negative margin-left compensates so the visual
-     position of "J" stays aligned with "Deep" above (no visual shift). */
-  padding-left:.12em;
-  padding-right:.12em;
-  margin-left:-.12em;
   display:inline-block;
 }
 .hero-tagline{
