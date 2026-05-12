@@ -144,7 +144,14 @@ main, .page-shell{position:relative;z-index:2}
   background:linear-gradient(120deg,var(--rose) 0%,var(--plum) 70%,var(--ink-soft) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-style:italic;font-weight:400;
-  padding-right:.1em;
+  /* Italic Fraunces "J" has a wide ascender hook reaching LEFT of the
+     glyph's normal box. Without left padding, background-clip:text on
+     Chromium crops the top-left curve of the J. Mirror padding on right
+     for the "y" descender. Negative margin-left compensates so the visual
+     position of "J" stays aligned with "Deep" above (no visual shift). */
+  padding-left:.12em;
+  padding-right:.12em;
+  margin-left:-.12em;
   display:inline-block;
 }
 .hero-tagline{
