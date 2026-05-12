@@ -94,13 +94,14 @@ main, .page-shell{position:relative;z-index:2}
   display:flex;align-items:center;justify-content:space-between;
   padding:18px 32px;
 }
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:20px;letter-spacing:-.3px;font-weight:500}
-.brand-mark{width:28px;height:28px;display:block}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:20px;letter-spacing:-.3px;font-weight:500;padding-right:6px}
+.brand-mark{width:28px;height:28px;display:block;flex:none}
 .nav-links{display:flex;gap:34px;font-size:14px;color:var(--muted);font-weight:500;letter-spacing:.1px}
 .nav-links a:hover{color:var(--ink)}
-.nav-lang{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--dim);text-transform:uppercase}
+.nav-lang{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--dim);text-transform:uppercase;user-select:none}
+.nav-lang span[data-lang]{cursor:pointer;transition:color .2s}
 .nav-lang span.on{color:var(--ink)}
-.nav-lang span:hover{color:var(--ink);cursor:pointer}
+.nav-lang span[data-lang]:hover{color:var(--ink)}
 @media (max-width:760px){
   .nav-links{display:none}
 }
@@ -132,11 +133,19 @@ main, .page-shell{position:relative;z-index:2}
   letter-spacing:-.04em;
   margin:32px 0 0;
   color:var(--ink);
+  /* Allow italic descenders / right-leaning glyphs of the gradient span
+     to fully render — without this padding the trailing "y" / capital "J"
+     italic was being clipped by background-clip:text on Chromium. */
+  padding-right:.08em;
+  padding-bottom:.06em;
+  overflow:visible;
 }
 .hero h1 .gradient{
   background:linear-gradient(120deg,var(--rose) 0%,var(--plum) 70%,var(--ink-soft) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-style:italic;font-weight:400;
+  padding-right:.1em;
+  display:inline-block;
 }
 .hero-tagline{
   font-family:var(--serif);
@@ -248,14 +257,14 @@ section.tight{padding:100px 0}
   width:90px;height:22px;border-radius:14px;background:#1A1F2E;z-index:5;
 }
 .phone-screen{
-  position:absolute;inset:0;padding:46px 16px 18px;
+  position:absolute;inset:0;padding:46px 14px 18px;
   font-family:var(--sans);color:var(--ink);
   display:flex;flex-direction:column;gap:10px;
 }
 .phone-screen .eyebrow-mini{
   font-family:var(--mono);font-size:8px;letter-spacing:1.6px;color:var(--muted);text-transform:uppercase;
 }
-.phone-screen .title{font-family:var(--serif);font-size:22px;line-height:1.05;letter-spacing:-.02em;font-weight:400;margin-top:2px}
+.phone-screen .title{font-family:var(--serif);font-size:20px;line-height:1.1;letter-spacing:-.02em;font-weight:400;margin-top:2px}
 .phone-screen .pill-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .phone-screen .pill{font-size:9px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--line-soft);color:var(--ink-soft);font-weight:500;backdrop-filter:blur(6px)}
 .phone-screen .pill.on{background:var(--rose);color:#fff;border-color:transparent}
@@ -424,68 +433,6 @@ footer{
 /* ── Reveal ─────────────────────────────────────────── */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
 .reveal.in{opacity:1;transform:none}
-
-/* ── Asset deliverables divider ─────────────────────── */
-.assets-section{
-  background:#0E121C;
-  color:#F0EBE5;
-  position:relative;
-  padding:120px 0 140px;
-  z-index:3;
-}
-.assets-section .wrap{position:relative}
-.assets-section .eyebrow{color:#9CA0AB}
-.assets-section .eyebrow::before{background:#fff;opacity:.4}
-.assets-section h2{font-family:var(--serif);font-size:clamp(40px,5vw,68px);font-weight:300;line-height:1;letter-spacing:-.025em;margin:18px 0 22px}
-.assets-section .lede{color:#9CA0AB;max-width:560px;line-height:1.6;margin-bottom:80px}
-.assets-row{display:grid;gap:32px;margin-bottom:80px}
-.assets-row.cols-3{grid-template-columns:repeat(3,1fr)}
-.assets-row.cols-2{grid-template-columns:1fr 1fr}
-@media (max-width:880px){.assets-row.cols-3,.assets-row.cols-2{grid-template-columns:1fr}}
-.asset-card{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:24px;padding:28px;
-}
-.asset-card h4{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:-.01em;margin:0 0 6px;color:#F5F0EA}
-.asset-card .meta{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:#7C8090;text-transform:uppercase;margin-bottom:22px}
-.asset-card .desc{font-size:14px;color:#B5B8C2;line-height:1.55;margin-top:18px;text-wrap:pretty}
-
-/* Icon preview tiles */
-.icon-preview{
-  aspect-ratio:1/1;border-radius:22px;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-}
-.icon-row-small{display:flex;gap:14px;margin-top:18px;align-items:center}
-.icon-row-small .mini{width:48px;height:48px;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.10)}
-.icon-row-small .mini-lbl{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:#7C8090;text-transform:uppercase}
-
-/* Header banner preview */
-.banner-preview{
-  aspect-ratio:16/9;border-radius:18px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  position:relative;
-}
-
-/* Promo text cards */
-.promo-card{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:18px;padding:24px 26px;
-}
-.promo-card .l{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:#7C8090;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between}
-.promo-card .l b{color:#E04F7B;font-weight:500;letter-spacing:1.6px}
-.promo-card p{font-family:var(--serif);font-size:19px;line-height:1.45;margin:0;font-weight:300;color:#F0EBE5;text-wrap:pretty}
-.promo-card.is-pick{border-color:#E04F7B;background:rgba(224,79,123,.06)}
-.promo-card.is-pick .l b{color:#FFB8CD}
-
-.assets-divider{
-  display:flex;align-items:center;gap:20px;
-  font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7C8090;
-  margin:60px 0 0;
-}
-.assets-divider::before,.assets-divider::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.10)}
 </style>
 <!-- Open Graph + Twitter Cards -->
 <meta property="og:type" content="website" />
@@ -520,16 +467,16 @@ footer{
       Deep Journey
     </a>
     <div class="nav-links">
-      <a href="#aplikacje">Aplikacje</a>
-      <a href="#manifesto">Manifesto</a>
-      <a href="#wartosci">Wartości</a>
-      <a href="#faq">FAQ</a>
-      <a href="#kontakt">Kontakt</a>
+      <a href="#aplikacje" data-en="Apps">Aplikacje</a>
+      <a href="#manifesto" data-en="Manifesto">Manifesto</a>
+      <a href="#wartosci" data-en="Values">Wartości</a>
+      <a href="#faq" data-en="FAQ">FAQ</a>
+      <a href="#kontakt" data-en="Contact">Kontakt</a>
     </div>
     <div class="nav-lang">
-      <span class="on">PL</span>
+      <span class="on" data-lang="pl">PL</span>
       <span style="opacity:.5">/</span>
-      <span>EN</span>
+      <span data-lang="en">EN</span>
     </div>
   </div>
 </nav>
@@ -541,28 +488,28 @@ footer{
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="eyebrow reveal">Studio · Warszawa, Polska</div>
+        <div class="eyebrow reveal" data-en="Studio · Warsaw, Poland">Studio · Warszawa, Polska</div>
         <h1 class="reveal">Deep<br/><span class="gradient">Journey</span></h1>
-        <p class="hero-tagline reveal">Aplikacje dla głębszych podróży emocjonalnych.</p>
-        <p class="hero-body reveal">Studio założone przez Marcina — twórcy oprogramowania, który wierzy, że technologia może wspierać autentyczną bliskość, a nie tylko produktywność. Tworzymy apki, które wymagają zatrzymania się, refleksji i obecności.</p>
+        <p class="hero-tagline reveal" data-en="Apps for deeper emotional journeys.">Aplikacje dla głębszych podróży emocjonalnych.</p>
+        <p class="hero-body reveal" data-en="A studio founded by Marcin — a software maker who believes technology can support real closeness, not just productivity. We build apps that ask you to slow down, reflect, and stay present.">Studio założone przez Marcina — twórcy oprogramowania, który wierzy, że technologia może wspierać autentyczną bliskość, a nie tylko produktywność. Tworzymy apki, które wymagają zatrzymania się, refleksji i obecności.</p>
         <div class="hero-cta reveal">
-          <a class="btn btn-primary" href="#aplikacje">
+          <a class="btn btn-primary" href="#aplikacje" data-en="See apps&nbsp;<svg viewBox='0 0 16 16' fill='none'><path d='M3 8h10M9 4l4 4-4 4' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
             Zobacz aplikacje
             <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a class="btn btn-ghost" href="#kontakt">Skontaktuj się</a>
+          <a class="btn btn-ghost" href="#kontakt" data-en="Get in touch">Skontaktuj się</a>
         </div>
       </div>
       <aside class="hero-side reveal">
-        <div>Flagship<b>Kto Ma Rację?</b></div>
-        <div>Założenie<b>2025</b></div>
-        <div>Lokalizacja<b>Warszawa</b></div>
-        <div>Język<b>Polski / English</b></div>
+        <div data-en="Flagship<b>Kto Ma Rację?</b>">Flagship<b>Kto Ma Rację?</b></div>
+        <div data-en="Founded<b>2026</b>">Założenie<b>2026</b></div>
+        <div data-en="Location<b>Warsaw</b>">Lokalizacja<b>Warszawa</b></div>
+        <div data-en="Language<b>Polish / English</b>">Język<b>Polski / English</b></div>
       </aside>
     </div>
   </div>
   <div class="scroll-cue">
-    <span>Przewiń</span>
+    <span data-en="Scroll">Przewiń</span>
     <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
       <rect x=".5" y=".5" width="13" height="21" rx="6.5" stroke="#B8AEB4"/>
       <circle cx="7" cy="7" r="2" fill="#B8AEB4"/>
@@ -574,30 +521,28 @@ footer{
 <section id="aplikacje" data-screen-label="03 Aplikacje">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">Nasze aplikacje</div>
+      <div class="eyebrow" data-en="Our apps">Nasze aplikacje</div>
       <div>
-        <h2>Apki które&nbsp;<em>wracają cię do siebie</em>.</h2>
-        <p>Pierwsza aplikacja Deep Journey jest dostępna w Google Play. Pozostałe — w drodze.</p>
+        <h2 data-en="Apps that bring you&nbsp;<em>closer to yourself</em>.">Apki, które&nbsp;<em>przybliżają cię do siebie</em>.</h2>
+        <p data-en="Deep Journey's first app is on Google Play. More on the way.">Pierwsza aplikacja Deep Journey jest dostępna w Google Play. Pozostałe — w drodze.</p>
       </div>
     </div>
 
     <div class="app-feature reveal">
       <div class="app-copy">
-        <div class="eyebrow">Premiera · 2025</div>
+        <div class="eyebrow" data-en="Launched · May 9, 2026">Premiera · 09.05.2026</div>
         <h3>Kto Ma Rację?</h3>
-        <p class="lede">AI mediator dla par. Dwoje ludzi, dwie historie, jedna analiza, która pomaga się zrozumieć.</p>
-        <p class="body">Każde z was opowiada swoją wersję sporu — osobno, na swoim telefonie. AI nie ocenia, kto wygrał. Pokazuje, czego naprawdę potrzebujecie i jak rozmawiać dalej. Prywatność end-to-end. Polski jako pierwszy język.</p>
+        <p class="lede" data-en="AI mediator for couples. Two people, two stories, one analysis that helps you understand each other.">AI mediator dla par. Dwoje ludzi, dwie historie, jedna analiza, która pomaga się zrozumieć.</p>
+        <p class="body" data-en="Each of you tells your side of the argument — privately, on your own phone. The AI doesn't judge who won. It shows what you really need and how to keep talking. End-to-end privacy. Polish first.">Każde z was opowiada swoją wersję sporu — osobno, na swoim telefonie. AI nie ocenia, kto wygrał. Pokazuje, czego naprawdę potrzebujecie i jak rozmawiać dalej. Prywatność end-to-end. Polski jako pierwszy język.</p>
         <div class="app-meta">
-          <div>Pobrań<b>1 200+</b></div>
-          <div>Ocena<b>4.8 / 5</b></div>
-          <div>Status<b>Live</b></div>
+          <div data-en="Status<b>Live</b>">Status<b>Live</b></div>
         </div>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.ktomaracje.app">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.ktomaracje.app" data-en="<svg viewBox='0 0 16 16' fill='currentColor'><path d='M3 1.5v13l10-6.5L3 1.5z'/></svg>&nbsp;Download on Google Play">
             <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1.5v13l10-6.5L3 1.5z"/></svg>
             Pobierz na Google Play
           </a>
-          <a class="btn btn-ghost" href="#manifesto">Poznaj nasze wartości</a>
+          <a class="btn btn-ghost" href="#manifesto" data-en="See our values">Poznaj nasze wartości</a>
         </div>
       </div>
 
@@ -607,17 +552,17 @@ footer{
           <div class="phone-notch"></div>
           <div class="phone-inner">
             <div class="phone-screen">
-              <span class="eyebrow-mini">Nowy spór · krok 1</span>
-              <span class="title">O&nbsp;czym&nbsp;rozmawiamy?</span>
+              <span class="eyebrow-mini" data-en="New dispute · step 1">Nowy spór · krok 1</span>
+              <span class="title" data-en="What's it&nbsp;about?">O czym rozmawiamy?</span>
               <div class="pill-row">
-                <span class="pill on">Pieniądze</span>
-                <span class="pill">Czas</span>
-                <span class="pill">Rodzina</span>
-                <span class="pill">Plany</span>
+                <span class="pill on" data-en="Money">Pieniądze</span>
+                <span class="pill" data-en="Time">Czas</span>
+                <span class="pill" data-en="Family">Rodzina</span>
+                <span class="pill" data-en="Plans">Plany</span>
               </div>
               <div class="phone-card">
-                <span class="lbl">Wybrany temat</span>
-                <span class="val">Wakacje — koszty i&nbsp;decyzje</span>
+                <span class="lbl" data-en="Topic">Wybrany temat</span>
+                <span class="val" data-en="Vacation — cost &amp;&nbsp;decisions">Wakacje — koszty i&nbsp;decyzje</span>
               </div>
             </div>
             <div class="phone-tab"><i></i><i class="on"></i><i></i><i></i></div>
@@ -628,17 +573,17 @@ footer{
           <div class="phone-notch"></div>
           <div class="phone-inner">
             <div class="phone-screen">
-              <span class="eyebrow-mini">Twoja perspektywa</span>
-              <span class="title">Co&nbsp;dla&nbsp;Ciebie ważne?</span>
+              <span class="eyebrow-mini" data-en="Your perspective">Twoja perspektywa</span>
+              <span class="title" data-en="What matters to&nbsp;you?">Co dla Ciebie ważne?</span>
               <div class="phone-card" style="margin-top:12px">
-                <span class="lbl">Twoja historia</span>
-                <span class="val" style="font-size:13px;font-style:italic;font-family:var(--serif)">"Czuję, że wszystkie decyzje&nbsp;…"</span>
+                <span class="lbl" data-en="Your story">Twoja historia</span>
+                <span class="val" style="font-size:13px;font-style:italic;font-family:var(--serif)" data-en="&quot;I feel every decision&nbsp;…&quot;">"Czuję, że wszystkie decyzje&nbsp;…"</span>
                 <div class="meter"><span style="width:62%"></span></div>
-                <span class="lbl" style="margin-top:10px;display:block">62 sek z 90</span>
+                <span class="lbl" style="margin-top:10px;display:block" data-en="62 sec of 90">62 sek z 90</span>
               </div>
               <div class="phone-card">
-                <span class="lbl">Emocja</span>
-                <span class="val">Zmęczenie · Tęsknota</span>
+                <span class="lbl" data-en="Emotion">Emocja</span>
+                <span class="val" data-en="Fatigue · Longing">Zmęczenie · Tęsknota</span>
               </div>
             </div>
             <div class="phone-tab"><i></i><i></i><i class="on"></i><i></i></div>
@@ -649,15 +594,15 @@ footer{
           <div class="phone-notch"></div>
           <div class="phone-inner">
             <div class="phone-screen">
-              <span class="eyebrow-mini">Analiza · gotowa</span>
-              <span class="title">Oboje macie&nbsp;rację.</span>
+              <span class="eyebrow-mini" data-en="Analysis · ready">Analiza · gotowa</span>
+              <span class="title" data-en="You're both&nbsp;right.">Oboje macie&nbsp;rację.</span>
               <div class="phone-card">
-                <span class="lbl">Wspólna potrzeba</span>
-                <span class="val">Poczucie współodpowiedzialności</span>
+                <span class="lbl" data-en="Shared need">Wspólna potrzeba</span>
+                <span class="val" data-en="A sense of shared responsibility">Poczucie współodpowiedzialności</span>
               </div>
               <div class="phone-card">
-                <span class="lbl">Pierwszy krok</span>
-                <span class="val" style="font-size:13px">Zaplanujcie 20 min&nbsp;rozmowy bez ekranów.</span>
+                <span class="lbl" data-en="First step">Pierwszy krok</span>
+                <span class="val" style="font-size:13px" data-en="Plan 20 min of screen-free talk.">Zaplanujcie 20 min&nbsp;rozmowy bez ekranów.</span>
               </div>
             </div>
             <div class="phone-tab"><i></i><i></i><i></i><i class="on"></i></div>
@@ -671,20 +616,20 @@ footer{
 <!-- ─── Manifesto ───────────────────────────────────── -->
 <section id="manifesto" class="manifesto" data-screen-label="04 Manifesto">
   <div class="wrap manifesto-inner">
-    <div class="reveal eyebrow">Dlaczego Deep Journey</div>
-    <p class="manifesto-quote reveal" style="margin-top:36px">
-      „Najlepsza technologia to ta, która <em>wraca cię do siebie</em>."
+    <div class="reveal eyebrow" data-en="Why Deep Journey">Dlaczego Deep Journey</div>
+    <p class="manifesto-quote reveal" style="margin-top:36px" data-en="„The best technology is the kind that <em>brings you closer to yourself</em>.&quot;">
+      „Najlepsza technologia to ta, która <em>przybliża cię do siebie</em>."
     </p>
 
     <div class="manifesto-body reveal">
       <div>
-        <div class="manifesto-portrait">portret&nbsp;·&nbsp;b&amp;w</div>
+        <div class="manifesto-portrait" data-en="portrait&nbsp;·&nbsp;b&amp;w">portret&nbsp;·&nbsp;b&amp;w</div>
       </div>
       <div class="manifesto-text">
-        <p>W 2025 roku zauważyłem jedną rzecz — najwięcej czasu spędzamy z apkami, które nas rozpraszają. A najmniej z tymi, które pomagają nam się skupić na tym, co naprawdę ważne: relacjach, emocjach, sobie.</p>
-        <p>Deep Journey tworzy aplikacje, które są świadomie nie-szybkie. Wymagają refleksji. Czasem ciszy. Zawsze Twojej obecności.</p>
-        <p>Nie wierzę w produktywność za wszelką cenę. Wierzę w narzędzia, które pomagają zrozumieć drugą osobę — i siebie.</p>
-        <div class="signature">Marcin, twórca</div>
+        <p data-en="I noticed one thing — we spend the most time with apps that distract us, and the least with the ones that help us focus on what really matters: relationships, emotions, ourselves.">W ostatnim czasie zauważyłem jedną rzecz — najwięcej czasu spędzamy z apkami, które nas rozpraszają. A najmniej z tymi, które pomagają nam się skupić na tym, co naprawdę ważne: relacjach, emocjach, sobie.</p>
+        <p data-en="Deep Journey makes apps that are deliberately not-fast. They ask for reflection. Sometimes silence. Always your presence.">Deep Journey tworzy aplikacje, które są świadomie nie-szybkie. Wymagają refleksji. Czasem ciszy. Zawsze Twojej obecności.</p>
+        <p data-en="I don't believe in productivity at any cost. I believe in tools that help you understand the other person — and yourself.">Nie wierzę w produktywność za wszelką cenę. Wierzę w narzędzia, które pomagają zrozumieć drugą osobę — i siebie.</p>
+        <div class="signature" data-en="Marcin, founder">Marcin, twórca</div>
       </div>
     </div>
   </div>
@@ -694,15 +639,15 @@ footer{
 <section id="wartosci" data-screen-label="05 Wartosci">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">Czym się kierujemy</div>
+      <div class="eyebrow" data-en="What we stand by">Czym się kierujemy</div>
       <div>
-        <h2>Trzy wartości,<br/>od których nie odstępujemy.</h2>
+        <h2 data-en="Three values we never&nbsp;compromise on.">Trzy wartości,<br/>od których nie odstępujemy.</h2>
       </div>
     </div>
 
     <div class="values">
       <div class="value reveal">
-        <div class="num">01 — Fundament</div>
+        <div class="num" data-en="01 — Foundation">01 — Fundament</div>
         <div class="value-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E04F7B" stroke-width="1.4">
             <rect x="5" y="11" width="14" height="9" rx="2"/>
@@ -710,32 +655,32 @@ footer{
             <circle cx="12" cy="15.5" r="1" fill="#E04F7B"/>
           </svg>
         </div>
-        <h4>Prywatność najpierw</h4>
-        <p>Twoje rozmowy i emocje nie wychodzą poza Twój telefon. Szyfrowanie end-to-end. Brak trenowania modeli na Twoich danych. Brak reklam. To fundament, nie funkcja.</p>
+        <h4 data-en="Privacy first">Prywatność najpierw</h4>
+        <p data-en="Your conversations and emotions stay on your phone. End-to-end encryption. No model training on your data. No ads. Foundation, not feature.">Twoje rozmowy i emocje nie wychodzą poza Twój telefon. Szyfrowanie end-to-end. Brak trenowania modeli na Twoich danych. Brak reklam. To fundament, nie funkcja.</p>
       </div>
 
       <div class="value reveal">
-        <div class="num">02 — Tempo</div>
+        <div class="num" data-en="02 — Pace">02 — Tempo</div>
         <div class="value-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A4FA0" stroke-width="1.4">
             <path d="M7 4h10M7 20h10"/>
             <path d="M7 4c0 5 5 5 5 8s-5 3-5 8M17 4c0 5-5 5-5 8s5 3 5 8"/>
           </svg>
         </div>
-        <h4>Głębia ponad pośpiech</h4>
-        <p>Tworzymy apki, które wymagają chwili, nie sekund. Powolne myślenie nie jest błędem UX — to jego cel. Lepsze pytanie zadane raz, niż dziesięć szybkich odpowiedzi.</p>
+        <h4 data-en="Depth over speed">Głębia ponad pośpiech</h4>
+        <p data-en="We build apps that take a moment, not seconds. Slow thinking isn't a UX bug — it's the goal. One better question beats ten quick answers.">Tworzymy apki, które wymagają chwili, nie sekund. Powolne myślenie nie jest błędem UX — to jego cel. Lepsze pytanie zadane raz, niż dziesięć szybkich odpowiedzi.</p>
       </div>
 
       <div class="value reveal">
-        <div class="num">03 — Praktyka</div>
+        <div class="num" data-en="03 — Practice">03 — Praktyka</div>
         <div class="value-icon">
           <svg width="28" height="24" viewBox="0 0 28 24" fill="none" stroke="#7A1F3D" stroke-width="1.4">
             <circle cx="10" cy="12" r="6"/>
             <circle cx="18" cy="12" r="6"/>
           </svg>
         </div>
-        <h4>Empatia w kodzie</h4>
-        <p>Każda decyzja designerska zaczyna się od pytania: jak ta funkcja pomaga ludziom się rozumieć? Jeśli odpowiedź jest nieoczywista — wraca do szkicownika.</p>
+        <h4 data-en="Empathy in code">Empatia w kodzie</h4>
+        <p data-en="Every design decision starts with one question: how does this feature help people understand each other? If the answer isn't clear — it goes back to the sketchbook.">Każda decyzja designerska zaczyna się od pytania: jak ta funkcja pomaga ludziom się rozumieć? Jeśli odpowiedź jest nieoczywista — wraca do szkicownika.</p>
       </div>
     </div>
   </div>
@@ -746,30 +691,30 @@ footer{
   <div class="wrap">
     <div class="faq-grid reveal">
       <div>
-        <div class="eyebrow">Bezpieczeństwo · Prywatność</div>
-        <h2 style="font-family:var(--serif);font-size:clamp(36px,4.4vw,58px);font-weight:300;line-height:1;letter-spacing:-.025em;margin:18px 0 16px">Pytania, które warto zadać.</h2>
-        <p style="color:var(--muted);max-width:340px;line-height:1.6">Odpowiadamy szczerze i konkretnie — bez korporacyjnego języka, bez ukrytych klauzul.</p>
+        <div class="eyebrow" data-en="Security · Privacy">Bezpieczeństwo · Prywatność</div>
+        <h2 style="font-family:var(--serif);font-size:clamp(36px,4.4vw,58px);font-weight:300;line-height:1;letter-spacing:-.025em;margin:18px 0 16px" data-en="Questions worth asking.">Pytania, które warto zadać.</h2>
+        <p style="color:var(--muted);max-width:340px;line-height:1.6" data-en="Honest, concrete answers — no corporate speak, no hidden clauses.">Odpowiadamy szczerze i konkretnie — bez korporacyjnego języka, bez ukrytych klauzul.</p>
       </div>
       <div>
         <details class="q" open>
-          <summary>Jak chronicie moje dane?<span class="plus"></span></summary>
-          <div class="ans">Wszystkie rozmowy są szyfrowane end-to-end. Treść Twoich sporów nigdy nie opuszcza Twojego urządzenia w postaci czytelnej dla nas. Analizy AI uruchamiane są w izolowanym środowisku i odrzucane natychmiast po wygenerowaniu wyniku.</div>
+          <summary><span data-en="How do you protect my data?">Jak chronicie moje dane?</span><span class="plus"></span></summary>
+          <div class="ans" data-en="All conversations are end-to-end encrypted. The content of your arguments never leaves your device in a form readable by us. AI analyses run in an isolated environment and are discarded immediately after the result is generated.">Wszystkie rozmowy są szyfrowane end-to-end. Treść Twoich sporów nigdy nie opuszcza Twojego urządzenia w postaci czytelnej dla nas. Analizy AI uruchamiane są w izolowanym środowisku i odrzucane natychmiast po wygenerowaniu wyniku.</div>
         </details>
         <details class="q">
-          <summary>Czy używacie AI do trenowania modeli?<span class="plus"></span></summary>
-          <div class="ans">Nie. Twoje treści nie są używane do trenowania ani dostrajania modeli. Korzystamy z gotowych modeli na zasadach umownych, w trybie zerowej retencji.</div>
+          <summary><span data-en="Do you use AI to train models?">Czy używacie AI do trenowania modeli?</span><span class="plus"></span></summary>
+          <div class="ans" data-en="No. Your content is never used to train or fine-tune models. We use third-party models on contractual zero-retention terms.">Nie. Twoje treści nie są używane do trenowania ani dostrajania modeli. Korzystamy z gotowych modeli na zasadach umownych, w trybie zerowej retencji.</div>
         </details>
         <details class="q">
-          <summary>Czy aplikacje działają offline?<span class="plus"></span></summary>
-          <div class="ans">Większość ekranów tak. Generowanie analizy AI wymaga połączenia z siecią — to jedyny moment kontaktu z naszymi serwerami. Reszta interfejsu działa w samolocie.</div>
+          <summary><span data-en="Do the apps work offline?">Czy aplikacje działają offline?</span><span class="plus"></span></summary>
+          <div class="ans" data-en="Most screens, yes. AI analysis requires a network connection — that's the only moment our servers are involved. The rest of the interface works on a plane.">Większość ekranów tak. Generowanie analizy AI wymaga połączenia z siecią — to jedyny moment kontaktu z naszymi serwerami. Reszta interfejsu działa w samolocie.</div>
         </details>
         <details class="q">
-          <summary>Jak mogę usunąć moje dane?<span class="plus"></span></summary>
-          <div class="ans">W aplikacji: Profil → Prywatność → Usuń konto. Wszystkie dane są kasowane w ciągu 24 godzin. Możesz też napisać do nas — zrobimy to ręcznie i prześlemy potwierdzenie.</div>
+          <summary><span data-en="How can I delete my data?">Jak mogę usunąć moje dane?</span><span class="plus"></span></summary>
+          <div class="ans" data-en="In the app: Profile → Privacy → Delete account. All data is wiped within 24 hours. You can also email us — we'll do it manually and send confirmation.">W aplikacji: Profil → Prywatność → Usuń konto. Wszystkie dane są kasowane w ciągu 24 godzin. Możesz też napisać do nas — zrobimy to ręcznie i prześlemy potwierdzenie.</div>
         </details>
         <details class="q">
-          <summary>Jak działa subskrypcja?<span class="plus"></span></summary>
-          <div class="ans">Pierwsze trzy spory są bezpłatne — bez karty, bez triala. Dalej: 19 zł / miesiąc lub 149 zł / rok. Bez auto-renewals bez ostrzeżenia, bez ukrytych dodatków.</div>
+          <summary><span data-en="How does the subscription work?">Jak działa subskrypcja?</span><span class="plus"></span></summary>
+          <div class="ans" data-en="Free plan: 5 analyses per week, no card, no trial. Basic: 14.99 PLN / month — 30 analyses. Pro: 24.99 PLN / month — 60 analyses plus advanced features (full emotional profile, ad-free, deeper interpretation). You can cancel anytime in Google Play.">Plan darmowy: 5 analiz tygodniowo, bez karty, bez triala. Basic: 14,99 zł / miesiąc — 30 analiz. Pro: 24,99 zł / miesiąc — 60 analiz plus zaawansowane funkcje (pełny profil emocjonalny, bez reklam, głębsza interpretacja). Anulujesz w każdej chwili w Google Play.</div>
         </details>
       </div>
     </div>
@@ -781,19 +726,19 @@ footer{
   <div class="wrap">
     <div class="contact-grid reveal">
       <div>
-        <div class="eyebrow">Kontakt</div>
-        <h2>Napisz do&nbsp;nas.</h2>
-        <p class="lead">Solo studio, jeden adres mailowy, prawdziwe odpowiedzi. Czas odpowiedzi 24–48 godzin, w dni robocze.</p>
-        <a class="btn btn-primary" href="mailto:deep.journey.app@gmail.com">
+        <div class="eyebrow" data-en="Contact">Kontakt</div>
+        <h2 data-en="Get in&nbsp;touch.">Napisz do&nbsp;nas.</h2>
+        <p class="lead" data-en="Solo studio, one email address, real replies. Response time 24–48 hours, business days.">Solo studio, jeden adres mailowy, prawdziwe odpowiedzi. Czas odpowiedzi 24–48 godzin, w dni robocze.</p>
+        <a class="btn btn-primary" href="mailto:deep.journey.app@gmail.com" data-en="Send email&nbsp;<svg viewBox='0 0 16 16' fill='none'><path d='M3 8h10M9 4l4 4-4 4' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
           Wyślij email
           <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
       <div class="contact-list">
-        <div class="contact-row"><span class="lbl">Wsparcie aplikacji</span><a class="val" href="mailto:deep.journey.app@gmail.com">deep.journey.app@gmail.com</a></div>
-        <div class="contact-row"><span class="lbl">Sprawy biznesowe</span><a class="val" href="mailto:deep.journey.app@gmail.com">deep.journey.app@gmail.com</a></div>
-        <div class="contact-row"><span class="lbl">Adres</span><span class="val">Jana Kazimierza 68/91<br/>01-248 Warszawa, Polska</span></div>
-        <div class="contact-row"><span class="lbl">Czas odpowiedzi</span><span class="val">24–48 godzin</span></div>
+        <div class="contact-row"><span class="lbl" data-en="App support">Wsparcie aplikacji</span><a class="val" href="mailto:deep.journey.app@gmail.com">deep.journey.app@gmail.com</a></div>
+        <div class="contact-row"><span class="lbl" data-en="Business inquiries">Sprawy biznesowe</span><a class="val" href="mailto:deep.journey.app@gmail.com">deep.journey.app@gmail.com</a></div>
+        <div class="contact-row"><span class="lbl" data-en="Address">Adres</span><span class="val" data-en="Jana Kazimierza 68<br/>01-248 Warsaw, Poland">Jana Kazimierza 68<br/>01-248 Warszawa, Polska</span></div>
+        <div class="contact-row"><span class="lbl" data-en="Response time">Czas odpowiedzi</span><span class="val" data-en="24–48 hours">24–48 godzin</span></div>
       </div>
     </div>
   </div>
@@ -809,22 +754,17 @@ footer{
         <circle cx="16" cy="16" r="14" stroke="url(#bm)" stroke-width="1.6"/>
         <circle cx="16" cy="16" r="4.5" fill="url(#bm)"/>
       </svg>
-      Deep Journey · Made in Warsaw
+      <span data-en="Deep Journey · Made in Warsaw">Deep Journey · Made in Warsaw</span>
     </div>
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Imprint</a>
+      <a href="#" data-en="Privacy Policy">Polityka prywatności</a>
+      <a href="#" data-en="Terms of Service">Regulamin</a>
+      <a href="#" data-en="Imprint">Impressum</a>
     </div>
     <div class="footer-meta">© 2026 Deep Journey</div>
   </div>
 </footer>
 
-
-<!-- ════════════════════════════════════════════════════════════════
-     ASSET DELIVERABLES
-     Wymagane przez Google Play Console — ikony, banner, teksty.
-     ════════════════════════════════════════════════════════════════ -->
 <script>
 // Reveal-on-scroll
 const io = new IntersectionObserver((entries)=>{
@@ -843,6 +783,35 @@ window.addEventListener('load',()=>{
     setTimeout(()=>el.classList.add('in'), 80*i);
   });
 });
+
+/* ── PL / EN language toggle ──────────────────────────
+   On load: cache the current (PL) innerHTML into data-pl
+   so we can swap back without re-parsing. Clicking PL or
+   EN in the nav swaps every [data-en] node and toggles the
+   "on" highlight. Stores choice in localStorage so the
+   user's selection sticks across reloads. */
+(function(){
+  const nodes = document.querySelectorAll('[data-en]');
+  nodes.forEach(el => { el.dataset.pl = el.innerHTML; });
+
+  const setLang = (lang) => {
+    if (lang !== 'pl' && lang !== 'en') lang = 'pl';
+    document.documentElement.lang = lang;
+    nodes.forEach(el => { el.innerHTML = el.dataset[lang]; });
+    document.querySelectorAll('.nav-lang span[data-lang]').forEach(s => {
+      s.classList.toggle('on', s.dataset.lang === lang);
+    });
+    try { localStorage.setItem('dj-lang', lang); } catch (e) {}
+  };
+
+  document.querySelectorAll('.nav-lang span[data-lang]').forEach(s => {
+    s.addEventListener('click', () => setLang(s.dataset.lang));
+  });
+
+  let initial = 'pl';
+  try { initial = localStorage.getItem('dj-lang') || 'pl'; } catch (e) {}
+  if (initial === 'en') setLang('en');
+})();
 </script>
 </body>
 </html>
