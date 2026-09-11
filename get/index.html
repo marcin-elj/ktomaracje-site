@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Who's Right? — Get the app</title>
+<meta name="description" content="Who's Right? — AI mediator for couples. Get it on Google Play.">
+<meta property="og:title" content="Who's Right? — AI mediator for couples">
+<meta property="og:description" content="Both of you tell your side. The AI shows what each of you was really trying to say.">
+<meta property="og:type" content="website">
+<style>
+  :root { color-scheme: light dark; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #faf6f7;
+    color: #2b1e24;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 32px 20px; box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #14090f; color: #f5e8ec; }
+    .muted { color: #b89aa4 !important; }
+  }
+  .wrap { max-width: 380px; }
+  .logo { font-size: 40px; margin-bottom: 8px; }
+  h1 { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
+  p { font-size: 15px; line-height: 1.5; margin: 8px 0; }
+  .muted { color: #7a6670; font-size: 13px; }
+  .btn {
+    display: inline-block; margin-top: 22px; padding: 14px 30px;
+    border-radius: 14px; background: linear-gradient(135deg,#e04f7b,#8a4fa0);
+    color: #fff; text-decoration: none; font-weight: 700; font-size: 15px;
+  }
+  .btn:active { opacity: .85; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">💛</div>
+    <h1>Who's Right?</h1>
+    <p>AI mediator for couples. Both of you tell your side, separately. The AI shows what each of you was really trying to say.</p>
+    <p class="muted">Taking you to Google Play…</p>
+    <a id="go" class="btn" href="https://play.google.com/store/apps/details?id=com.ktomaracje.app" rel="noopener">Get it on Google Play</a>
+  </div>
+  <script>
+    // Meta Ads → Play Store bridge. Ads Manager rejects app-store URLs on
+    // Traffic campaigns (#1487810), so the ad points here and this page passes
+    // the campaign name to Play's install referrer as UTM.
+    (function () {
+      var PKG = "com.ktomaracje.app";
+      var q = new URLSearchParams(location.search);
+      var c = (q.get("c") || "meta").replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 60) || "meta";
+      var src = (q.get("s") || "meta").replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 30) || "meta";
+      var referrer = "utm_source=" + src + "&utm_medium=paid&utm_campaign=" + c;
+      var url = "https://play.google.com/store/apps/details?id=" + PKG +
+                "&referrer=" + encodeURIComponent(referrer);
+      var a = document.getElementById("go");
+      a.href = url;
+      // Bots/crawlers (Meta link preview) just see the page; humans get sent on.
+      if (!/bot|crawl|facebookexternalhit|facebot|preview|spider/i.test(navigator.userAgent)) {
+        setTimeout(function () { location.replace(url); }, 400);
+      }
+    })();
+  </script>
+</body>
+</html>
