@@ -22,19 +22,24 @@
   }
   @media (prefers-color-scheme: dark) {
     body { background: #14090f; color: #f5e8ec; }
-    .muted { color: #b89aa4 !important; }
+    .muted, .note, .alt { color: #b89aa4 !important; }
   }
   .wrap { max-width: 380px; }
   .logo { font-size: 40px; margin-bottom: 8px; }
   h1 { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
   p { font-size: 15px; line-height: 1.5; margin: 8px 0; }
-  .muted { color: #7a6670; font-size: 13px; }
+  .muted { color: #7a6670; font-size: 14px; }
   .btn {
-    display: inline-block; margin-top: 22px; padding: 14px 30px;
+    display: block; margin: 22px auto 0; padding: 16px 28px; max-width: 300px;
     border-radius: 14px; background: linear-gradient(135deg,#e04f7b,#8a4fa0);
-    color: #fff; text-decoration: none; font-weight: 700; font-size: 15px;
+    color: #fff; text-decoration: none; font-weight: 700; font-size: 17px;
   }
   .btn:active { opacity: .85; }
+  .pulse { animation: pulse 1.2s ease-in-out 3; }
+  @keyframes pulse { 50% { transform: scale(1.06); } }
+  .alt { display: block; margin-top: 16px; color: #7a6670; font-size: 13px; }
+  .note { margin-top: 28px; color: #9a8790; font-size: 11px; line-height: 1.4; }
+  .note a { color: inherit; }
 </style>
 </head>
 <body>
@@ -42,28 +47,16 @@
     <div class="logo">💛</div>
     <h1>Who's Right?</h1>
     <p>AI mediator for couples. Both of you tell your side, separately. The AI shows what each of you was really trying to say.</p>
-    <p class="muted">Taking you to Google Play…</p>
+    <p id="status" class="muted">Tap the button to get the app.</p>
     <a id="go" class="btn" href="https://play.google.com/store/apps/details?id=com.ktomaracje.app" rel="noopener">Get it on Google Play</a>
+    <a id="alt" class="alt" href="#" rel="noopener" hidden></a>
+    <p class="note">We count visits to this page anonymously — no cookies, IP addresses are not stored — to check that this link works.
+      <a href="https://marcin-elj.github.io/kto-ma-racje-docs/privacy.html" rel="noopener">Privacy policy</a></p>
   </div>
-  <script>
-    // Meta Ads → Play Store bridge. Ads Manager rejects app-store URLs on
-    // Traffic campaigns (#1487810), so the ad points here and this page passes
-    // the campaign name to Play's install referrer as UTM.
-    (function () {
-      var PKG = "com.ktomaracje.app";
-      var q = new URLSearchParams(location.search);
-      var c = (q.get("c") || "meta").replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 60) || "meta";
-      var src = (q.get("s") || "meta").replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 30) || "meta";
-      var referrer = "utm_source=" + src + "&utm_medium=paid&utm_campaign=" + c;
-      var url = "https://play.google.com/store/apps/details?id=" + PKG +
-                "&referrer=" + encodeURIComponent(referrer);
-      var a = document.getElementById("go");
-      a.href = url;
-      // Bots/crawlers (Meta link preview) just see the page; humans get sent on.
-      if (!/bot|crawl|facebookexternalhit|facebot|preview|spider/i.test(navigator.userAgent)) {
-        setTimeout(function () { location.replace(url); }, 400);
-      }
-    })();
-  </script>
+  <!-- Meta Ads → sklep. Ads Manager odrzuca adresy sklepow w kampaniach Ruch (#1487810), wiec
+       reklama prowadzi tutaj. Logika i pomiar: bridge.js (v2, 2026-09-19). Bez bridge.js przycisk
+       wyzej nadal prowadzi do Google Play. -->
+  <script src="bridge.js?v=2"></script>
+  <script>if (window.KMRBridge) window.KMRBridge.run(window);</script>
 </body>
 </html>
